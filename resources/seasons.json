@@ -1,0 +1,36 @@
+{
+    "seasons":
+    {
+        "languages":
+        {
+            "eng":
+            [
+                "winter",
+                "spring",
+                "summer",
+                "autumn"
+            ],
+            "spa":
+            [
+                "invierno",
+                "primavera",
+                "verano",
+                "otoño",
+                "otono"
+            ],
+            "vie":
+            [
+                "mùađông",
+                "muadong",
+                "mùaxuân",
+                "muaxuan",
+                "mùahè",
+                "mùahạ",
+                "muahe",
+                "muaha",
+                "mùathu",
+                "muathu"
+            ]
+        }
+    }
+}
