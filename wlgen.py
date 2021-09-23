@@ -61,6 +61,12 @@ parser.add_argument('--lang',
                     nargs = 1,
                     type = str)
 
+parser.add_argument('--users',
+                    '-U',
+                    help = 'List of users, the domain will be deleted automatically if the list contains email addresses',
+                    nargs = 1,
+                    type = str)
+
 args = parser.parse_args()
 
 if args.keywords is not None:
@@ -107,6 +113,21 @@ if args.lang is not None:
 
 else:
     exit('It requires the language for the target')
+
+if args.users is not None:
+    try:
+        usersfile = open(str(args.users[0]), 'r')
+        for user in usersfile:
+            user = user.rstrip('\n')
+            usernomail = re.search(r'([\w\d\.]+)@[\w\d\.]+', user)
+            if usernomail and user.count('@') == 1:
+                users.append(usernomail.group(1))
+            else:
+                users.append(user)
+        usersfile.close()
+    except Exception as e:
+        print('The file could not be read')
+        exit(str(e))
 
 file = open(filename, 'w+')
 
@@ -172,8 +193,16 @@ writetofile(target)
 for tn in range(minyear, currentyear):
     writetofile(target, tn)
 
+if len(users):
+    cleanusers = [i for n, i in enumerate(users) if i not in users[:n]]
+    for u in cleanusers:
+        writetofile(str(u))
+        for un in range(minyear, currentyear):
+            writetofile(u, un)
+
 if len(keywords):
-    for k in keywords:
+    cleankeys = [i for n, i in enumerate(keywords) if i not in keywords[:n]]
+    for k in cleankeys:
         writetofile(str(k))
         for kn in range(minyear, currentyear):
             writetofile(k, kn)
