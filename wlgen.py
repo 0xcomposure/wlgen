@@ -1,21 +1,27 @@
-import json
+import re
 import sys
+import json
 import signal
 import argparse
+import validators
 from datetime import date
 
 days = []
+users = []
 months = []
 seasons = []
 keywords = []
 languages = []
+subdomains = []
+
 lang = ''
 target = ''
+minyear = 1970
+complete = False
 filename = 'wordlist.txt'
 resourcespath = 'resources/'
 currentyear = date.today().year
-complete = False
-minyear = 1970
+urlre = re.compile(r"https?://(www\.)?")
 
 with open(resourcespath + 'languages.json') as languagesjson:
     languages = json.load(languagesjson)
@@ -57,8 +63,27 @@ parser.add_argument('--lang',
 
 args = parser.parse_args()
 
+if args.keywords is not None:
+    try:
+        keywords = str(args.keywords[0]).split(',')
+    except Exception as e:
+        print('The keywords must be separated by comma and no space between each keyword.')
+        exit(str(e))
+
 if args.target is not None:
-    target = str(args.target[0])
+    if validators.url(str(args.target[0])):
+        target = urlre.sub('', str(args.target[0])).strip().strip('/')
+    else:    
+        target = str(args.target[0])
+
+    if target.count('.') > 1:
+        domstrings = str(target).split('.')
+        subdomains.extend(domstrings[:len(domstrings) - 2])
+        del domstrings[:len(domstrings) - 2]
+        target = domstrings[0]
+        for sd in subdomains:
+            keywords.append(sd)
+    target = str(target.split('.')[0])
     print('Target: ' + target + '\n')
 else:
     exit('It requires the target')
@@ -70,20 +95,14 @@ if args.output is not None:
 if args.complete is True:
     complete = True
 
-if args.keywords is not None:
-    try:
-        keywords = str(args.keywords[0]).split(',')
-    except Exception as e:
-        print('The keywords must be separated by comma and no space between each keyword.')
-        exit(str(e))
-
 if args.lang is not None:
     try:
-        lang = str(args.lang[0])
-        if lang in languages['languages']:
+        if str(args.lang[0]) in languages['languages']:
+            lang = str(args.lang[0])
             print('Language for the target: ' + lang + '\n')
+        else:
+            raise Exception('The language code is not valid.')
     except Exception as e:
-        print('The language code is not valid')
         exit(str(e))
 
 else:
@@ -155,8 +174,8 @@ for tn in range(minyear, currentyear):
 
 if len(keywords):
     for k in keywords:
-        writetofile(k)
+        writetofile(str(k))
         for kn in range(minyear, currentyear):
             writetofile(k, kn)
-print('Wordlist saved in: ' + filename);
+print('Wordlist saved in: ' + filename)
 file.close()
