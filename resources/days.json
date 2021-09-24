@@ -62,6 +62,44 @@
                 "thứbảy",
                 "ngaythubay",
                 "thubay"
+            ],
+            "por": [
+                "domingo",
+                "segunda-feira",
+                "segundafeira",
+                "terça-feira",
+                "terçafeira",
+                "tercafeira",
+                "quarta-feira",
+                "quartafeira",
+                "quinta-feira",
+                "quintafeira",
+                "sexta-feira",
+                "sextafeira",
+                "sábado",
+                "sabado"
+            ],
+            "cat":
+            [
+                "diumenge",
+                "dilluns",
+                "dimarts",
+                "dimecres",
+                "dijous",
+                "divendres",
+                "dissabte"
+            ],
+            "glg":
+            [
+                "domingo",
+                "luns",
+                "martes",
+                "mércores",
+                "mercores",
+                "xoves",
+                "venres",
+                "sábado",
+                "sabado"
             ]
         }
     }

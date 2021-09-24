@@ -1,3 +1,4 @@
+import os
 import re
 import sys
 import json
@@ -19,9 +20,9 @@ target = ''
 minyear = 1970
 complete = False
 filename = 'wordlist.txt'
-resourcespath = 'resources/'
 currentyear = date.today().year
 urlre = re.compile(r"https?://(www\.)?")
+resourcespath = os.path.dirname(os.path.abspath(__file__)) + '/resources/'
 
 with open(resourcespath + 'languages.json') as languagesjson:
     languages = json.load(languagesjson)
@@ -56,7 +57,7 @@ parser.add_argument('--keywords',
 
 parser.add_argument('--lang',
                     '-L',
-                    help = 'Language of the target:\tEnglish:eng, Spanish:spa, Vietnamese:vie',
+                    help = 'Language of the target:\tEnglish:eng, Spanish:spa, Vietnamese:vie, Portuguese: por, Catalan: cat, Galician: glg',
                     required = True,
                     nargs = 1,
                     type = str)
@@ -121,7 +122,8 @@ if args.users is not None:
             user = user.rstrip('\n')
             usernomail = re.search(r'([\w\d\.]+)@[\w\d\.]+', user)
             if usernomail and user.count('@') == 1:
-                users.append(usernomail.group(1))
+                users.append(usernomail.group(1).replace('.', '').replace(' ', ''))
+                users.append(usernomail.group(1).replace(' ', ''))
             else:
                 users.append(user)
         usersfile.close()
@@ -150,9 +152,16 @@ def writetofile(v, n = 0):
         file.write(v[0].upper() + v[1:] + str(n) + '\n')
         file.write(v.upper() + str(n) + '\n')
         if complete:
+            file.write(v + '@' + '\n')
             file.write(str(n) + v + '\n')
-            file.write(str(n) + v[0].upper() + v[1:] + '\n')
             file.write(str(n) + v.upper() + '\n')
+            file.write(str(n) + v[0].upper() + v[1:] + '\n')
+            file.write(v + '@' + str(n) + '\n')
+            file.write(v.upper() + '@' + str(n) + '\n')
+            file.write(v[0].upper() + v[:1] + '@' + str(n) + '\n')
+            file.write(str(n) + '@' + v + '\n')
+            file.write(str(n) + '@' + v.upper() + '\n')
+            file.write(str(n) + '@' + v[0].upper() + v[1:] + '\n')
     else:
         file.write(v + '\n')
         file.write(v[0].upper() + v[1:] + '\n')

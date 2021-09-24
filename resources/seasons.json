@@ -30,6 +30,29 @@
                 "muaha",
                 "mùathu",
                 "muathu"
+            ],
+            "por":
+            [
+                "inverno",
+                "primavera",
+                "verão",
+                "verao",
+                "outono"
+            ],
+            "cat":
+            [
+                "hivern",
+                "primavera",
+                "estiu",
+                "tardor"
+            ],
+            "glg":
+            [
+                "inverno",
+                "primavera",
+                "verán",
+                "veran",
+                "outono"
             ]
         }
     }

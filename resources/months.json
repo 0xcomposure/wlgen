@@ -105,7 +105,58 @@
                 "thangmuoihai",
                 "tmh",
                 "t12"
-            ]  
+            ],
+            "por": [
+                "janeiro",
+                "jan",
+                "jan",
+                "fevereiro",
+                "fev",
+                "março",
+                "marco",
+                "abril",
+                "maio",
+                "junho",
+                "julho",
+                "agosto",
+                "setembro",
+                "set",
+                "outubro",
+                "out",
+                "novembro",
+                "nov",
+                "dezembro",
+                "dez"
+            ],
+            "cat":
+            [
+                "gener",
+                "febrer",
+                "març",
+                "marc",
+                "abril",
+                "maig",
+                "juny",
+                "juliol",
+                "agost",
+                "setembre",
+                "octubre",
+                "novembre",
+                "desembre"
+            ],
+            "glg":
+            [
+                "xaneiro",
+                "febreiro",
+                "marzo",
+                "marzal",
+                "abril",
+                "maio",
+                "xuño",
+                "xuno",
+                "xullo",
+                "agosto"
+            ]
         }       
     }
 }

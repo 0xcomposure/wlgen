@@ -9,7 +9,7 @@ Wordlist generator for a target.
 
 ``--output -O`` Output file.
 
-``--complete -C`` Add more causistry.
+``--complete -C`` Add more casuistry.
 
 ``--keywords -K`` List of keywords to add, separated by comma and no space between each keyword. Example: 'example,keyword,test,word'
 
