@@ -6,8 +6,10 @@ import signal
 import argparse
 import validators
 from datetime import date
+from argparse import RawTextHelpFormatter
 
 days = []
+lang = []
 users = []
 months = []
 seasons = []
@@ -15,7 +17,6 @@ keywords = []
 languages = []
 subdomains = []
 
-lang = ''
 target = ''
 minyear = 1970
 complete = False
@@ -28,43 +29,47 @@ with open(resourcespath + 'languages.json') as languagesjson:
     languages = json.load(languagesjson)
 
 parser = argparse.ArgumentParser(description='Wordlist Generator.')
+parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter)
 parser.add_argument('--target',
                     '-T',
-                    help = "Enter the name of the target: "
-                         + "-T targetcorp",
+                    help = "Enter the name of the target. \n"
+                         + "Example: -T targetcorp or -T https://targetcorp.com/\n",
                     required = True,
                     nargs = 1,
                     type = str)
 
 parser.add_argument('--output',
                     '-O',
-                    help = "Output file: "
-                         + "-O wordlist.txt",
+                    help = "Output file. \n"
+                         + "Example: -O /path/to/output.txt\n",
                     nargs = 1,
                     type = str)
 
 parser.add_argument('--complete',
                     '-C',
-                    help = 'Add more causistry:',
+                    help = 'Add more causistry.\n',
                     action = 'store_true')
 
 parser.add_argument('--keywords',
                     '-K',
-                    help = 'List of keywords to add, separated by comma and no space between each keyword:'
-                         + '-K example,keyword,test,word',
+                    help = 'List of keywords to add, separated by comma and no space between each keyword.'
+                         + 'Example: -K example,keyword,test,word\n',
                     nargs = 1,
                     type = str)
 
 parser.add_argument('--lang',
                     '-L',
-                    help = 'Language of the target:\tEnglish:eng, Spanish:spa, Vietnamese:vie, Portuguese: por, Catalan: cat, Galician: glg',
+                    help = 'Language of the target.\n'
+                         + 'English:eng, Spanish:spa, Vietnamese:vie, Portuguese: por, Catalan: cat, Galician: glg\n'
+                         + 'To add more than one separate each by comma and no space between each one.\n'
+                         + 'Example: -L eng,spa\n',
                     required = True,
                     nargs = 1,
                     type = str)
 
 parser.add_argument('--users',
                     '-U',
-                    help = 'List of users, the domain will be deleted automatically if the list contains email addresses',
+                    help = 'List of users, the domain will be deleted automatically if the list contains email addresses\n',
                     nargs = 1,
                     type = str)
 
@@ -104,11 +109,14 @@ if args.complete is True:
 
 if args.lang is not None:
     try:
-        if str(args.lang[0]) in languages['languages']:
-            lang = str(args.lang[0])
-            print('Language for the target: ' + lang + '\n')
-        else:
-            raise Exception('The language code is not valid.')
+        langs = []
+        langs = str(args.lang[0]).split(',')
+        for l in langs:
+            if l in languages['languages']:
+                lang.append(str(l))
+            else:
+                raise Exception('The language code is not valid.')
+        print('Languages for the target: ' + ','.join(lang) + '\n')
     except Exception as e:
         exit(str(e))
 
@@ -168,17 +176,22 @@ def writetofile(v, n = 0):
         file.write(v.upper() + '\n')
         
 
-def getjson(jsondata, typedata):
-    return json.load(jsondata)[typedata]['languages'][lang]
+def getjson(data, typedata, language=''):
+    return data[typedata]['languages'][language]
 
 with open(resourcespath + 'days.json') as days_json:
-    days = getjson(days_json, 'days')
-
+    data = json.load(days_json)
+    for l in lang:
+        days.extend(getjson(data, 'days', l))
 with open(resourcespath + 'months.json') as months_json:
-    months = getjson(months_json, 'months')
+    data = json.load(months_json)
+    for l in lang:
+        months.extend(getjson(data, 'months', l))
 
 with open(resourcespath + 'seasons.json') as seasons_json:
-    seasons = getjson(seasons_json, 'seasons')
+    data = json.load(seasons_json)
+    for l in lang:
+        seasons.extend(getjson(data, 'seasons', l))
 
 for d in days:
     writetofile(d)
