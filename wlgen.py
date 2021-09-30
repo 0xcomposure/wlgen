@@ -166,7 +166,7 @@ def writetofile(v, n = 0):
             file.write(str(n) + v[0].upper() + v[1:] + '\n')
             file.write(v + '@' + str(n) + '\n')
             file.write(v.upper() + '@' + str(n) + '\n')
-            file.write(v[0].upper() + v[:1] + '@' + str(n) + '\n')
+            file.write(v[0].upper() + v[1:] + '@' + str(n) + '\n')
             file.write(str(n) + '@' + v + '\n')
             file.write(str(n) + '@' + v.upper() + '\n')
             file.write(str(n) + '@' + v[0].upper() + v[1:] + '\n')
