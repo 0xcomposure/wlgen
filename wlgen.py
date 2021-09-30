@@ -21,7 +21,7 @@ target = ''
 minyear = 1970
 complete = False
 filename = 'wordlist.txt'
-currentyear = date.today().year
+currentyear = date.today().year + 1 
 urlre = re.compile(r"https?://(www\.)?")
 resourcespath = os.path.dirname(os.path.abspath(__file__)) + '/resources/'
 
