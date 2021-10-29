@@ -218,9 +218,10 @@ for tn in range(minyear, currentyear):
 if len(users):
     cleanusers = [i for n, i in enumerate(users) if i not in users[:n]]
     for u in cleanusers:
-        writetofile(str(u))
-        for un in range(minyear, currentyear):
-            writetofile(u, un)
+        if u.split():
+            writetofile(str(u))
+            for un in range(minyear, currentyear):
+              writetofile(u, un)
 
 if len(keywords):
     cleankeys = [i for n, i in enumerate(keywords) if i not in keywords[:n]]
