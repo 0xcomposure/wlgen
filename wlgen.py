@@ -25,7 +25,7 @@ currentyear = date.today().year + 1
 urlre = re.compile(r"https?://(www\.)?")
 resourcespath = os.path.dirname(os.path.abspath(__file__)) + '/resources/'
 
-with open(resourcespath + 'languages.json') as languagesjson:
+with open(resourcespath + 'languages.json', encoding="utf8") as languagesjson:
     languages = json.load(languagesjson)
 
 parser = argparse.ArgumentParser(description='Wordlist Generator.')
@@ -125,7 +125,7 @@ else:
 
 if args.users is not None:
     try:
-        usersfile = open(str(args.users[0]), 'r')
+        usersfile = open(str(args.users[0]), 'r', encoding="utf8")
         for user in usersfile:
             user = user.rstrip('\n')
             usernomail = re.search(r'([\w\d\.]+)@[\w\d\.]+', user)
@@ -139,7 +139,7 @@ if args.users is not None:
         print('The file could not be read')
         exit(str(e))
 
-file = open(filename, 'w+')
+file = open(filename, 'w+', encoding="utf8")
 
 
 def exit(msg):
@@ -154,19 +154,19 @@ signal.signal(signal.SIGINT, sigint_handler)
 
 
 
-def writetofile(v, n = 0):
+def writetofile(v, n = ''):
     if n:  
         file.write(v + str(n) + '\n')
         file.write(v[0].upper() + v[1:] + str(n) + '\n')
         file.write(v.upper() + str(n) + '\n')
+        file.write(v + '@' + str(n) + '\n')
+        file.write(v.upper() + '@' + str(n) + '\n')
+        file.write(v[0].upper() + v[1:] + '@' + str(n) + '\n')
         if complete:
-            file.write(v + '@' + '\n')
+            file.write(v + '@' '\n')
             file.write(str(n) + v + '\n')
             file.write(str(n) + v.upper() + '\n')
             file.write(str(n) + v[0].upper() + v[1:] + '\n')
-            file.write(v + '@' + str(n) + '\n')
-            file.write(v.upper() + '@' + str(n) + '\n')
-            file.write(v[0].upper() + v[1:] + '@' + str(n) + '\n')
             file.write(str(n) + '@' + v + '\n')
             file.write(str(n) + '@' + v.upper() + '\n')
             file.write(str(n) + '@' + v[0].upper() + v[1:] + '\n')
@@ -179,55 +179,84 @@ def writetofile(v, n = 0):
 def getjson(data, typedata, language=''):
     return data[typedata]['languages'][language]
 
-with open(resourcespath + 'days.json') as days_json:
+with open(resourcespath + 'days.json', encoding="utf8") as days_json:
     data = json.load(days_json)
     for l in lang:
         days.extend(getjson(data, 'days', l))
-with open(resourcespath + 'months.json') as months_json:
+with open(resourcespath + 'months.json', encoding="utf8") as months_json:
     data = json.load(months_json)
     for l in lang:
         months.extend(getjson(data, 'months', l))
 
-with open(resourcespath + 'seasons.json') as seasons_json:
+with open(resourcespath + 'seasons.json', encoding="utf8") as seasons_json:
     data = json.load(seasons_json)
     for l in lang:
         seasons.extend(getjson(data, 'seasons', l))
 
+with open(resourcespath + 'keywords.json', encoding="utf8") as keyword_json:
+    data = json.load(keyword_json)
+    for l in lang:
+        keywords.extend(getjson(data, 'keywords', l))
+
 for d in days:
     writetofile(d)
+    if complete:
+        for dn in range(minyear, currentyear + 1):
+            writetofile(d, str(dn))
     for dn in range(1, 31):
-        writetofile(d, dn)
+        writetofile(d, str(dn))
+        writetofile(d, str(dn).zfill(2))
+        writetofile(d, str(dn).zfill(3))
+            
 
 if complete:
     minyear = 1
 
 for m in months:
     writetofile(m)
-    for mn in range(minyear, currentyear):
-        writetofile(m, mn)
+    for mn in range(minyear, currentyear + 1):
+        writetofile(m, str(mn))
+        writetofile(m, str(mn).zfill(2))
+        writetofile(m, str(mn).zfill(3))     
 
 for s in seasons:
     writetofile(s)
-    for sn in range(minyear, currentyear):
-        writetofile(s, sn)
+    for sn in range(minyear, currentyear + 1):
+        writetofile(s, str(sn))
+        writetofile(s, str(sn).zfill(2))
+        writetofile(s, str(sn).zfill(3))     
 
 writetofile(target)
-for tn in range(minyear, currentyear):
-    writetofile(target, tn)
+if complete == False:
+    for tn in range(1, 51):
+        writetofile(target, str(tn))
+
+for tn in range(minyear, currentyear + 1):
+    writetofile(target, str(tn))
+    writetofile(target, str(tn).zfill(2))
+    writetofile(target, str(tn).zfill(3))
 
 if len(users):
     cleanusers = [i for n, i in enumerate(users) if i not in users[:n]]
     for u in cleanusers:
         if u.split():
             writetofile(str(u))
-            for un in range(minyear, currentyear):
-              writetofile(u, un)
+            for un in range(minyear, currentyear + 1):
+                writetofile(u, str(un))
+                writetofile(u, str(un).zfill(2))
+                writetofile(u, str(un).zfill(3))               
 
 if len(keywords):
     cleankeys = [i for n, i in enumerate(keywords) if i not in keywords[:n]]
     for k in cleankeys:
         writetofile(str(k))
-        for kn in range(minyear, currentyear):
-            writetofile(k, kn)
+        if complete == False:
+            for kn in range(1, 51):
+                writetofile(k, str(kn))
+        for kn in range(minyear, currentyear + 1):
+            writetofile(k, str(kn))
+            writetofile(k, str(kn).zfill(2))
+            writetofile(k, str(kn).zfill(3))
+
 print('Wordlist saved in: ' + filename)
 file.close()
