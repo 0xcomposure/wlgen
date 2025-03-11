@@ -109,7 +109,6 @@
             "por": [
                 "janeiro",
                 "jan",
-                "jan",
                 "fevereiro",
                 "fev",
                 "março",
@@ -131,6 +130,7 @@
             "cat":
             [
                 "gener",
+                "gen",
                 "febrer",
                 "març",
                 "marc",
@@ -147,6 +147,7 @@
             "glg":
             [
                 "xaneiro",
+                "xan",
                 "febreiro",
                 "marzo",
                 "marzal",
@@ -156,6 +157,58 @@
                 "xuno",
                 "xullo",
                 "agosto"
+            ],
+            "deu": [
+                "januar",
+                "jan",
+                "februar",
+                "feb",
+                "märz",
+                "maerz",
+                "mar",
+                "april",
+                "apr",
+                "mai",
+                "juni",
+                "jun",
+                "juli",
+                "jul",
+                "august",
+                "aug",
+                "september",
+                "sep",
+                "oktober",
+                "okt",
+                "november",
+                "nov",
+                "dezember",
+                "dez"
+            ],
+            "jpn": [
+                "ichigatsu",
+                "１月",
+                "nigatsu",
+                "２月",
+                "sangatsu",
+                "３月",
+                "shigatsu",
+                "４月",
+                "gogatsu",
+                "５月",
+                "rokugatsu",
+                "６月",
+                "shichigatsu",
+                "７月",
+                "hachigatsu",
+                "８月",
+                "kugatsu",
+                "９月",
+                "juugatsu",
+                "１０月",
+                "juuichigatsu",
+                "１１月",
+                "juunigatsu",
+                "１２月"
             ]
         }       
     }
