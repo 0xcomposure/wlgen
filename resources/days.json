@@ -9,7 +9,7 @@
                 "sun",
                 "monday",
                 "mon",
-                "tuestday",
+                "tuesday",
                 "tues",
                 "wednesday",
                 "wed",
@@ -100,6 +100,31 @@
                 "venres",
                 "sábado",
                 "sabado"
+            ],
+            "deu": [
+                "sonntag",
+                "montag",
+                "dienstag",
+                "mittwoch",
+                "donnerstag",
+                "freitag",
+                "samstag",
+                "sonnabend"
+            ],
+            "jpn": [
+                "nichiyoubi",
+                "月曜日",
+                "getsuyoubi",
+                "火曜日",
+                "kayoubi",
+                "水曜日",
+                "suiyoubi",
+                "木曜日",
+                "mokuyoubi",
+                "金曜日",
+                "kinyoubi",
+                "土曜日",
+                "doyoubi"
             ]
         }
     }
