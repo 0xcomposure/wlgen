@@ -8,7 +8,8 @@
                 "winter",
                 "spring",
                 "summer",
-                "autumn"
+                "autumn",
+                "fall"
             ],
             "spa":
             [
@@ -53,6 +54,24 @@
                 "verán",
                 "veran",
                 "outono"
+            ],
+            "deu": [
+                "winter",
+                "frühling",
+                "fruhling",
+                "fruehling",
+                "sommer",
+                "herbst"
+            ],
+            "jpn": [
+                "fuyu",
+                "冬",
+                "haru",
+                "春",
+                "natsu",
+                "夏",
+                "aki",
+                "秋"
             ]
         }
     }
